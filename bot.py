@@ -29,7 +29,7 @@ def salto(message):
 def start(message):
     user_name = message.from_user.first_name
     bot.send_message(message.chat.id,
-                     text=f"Привет, {user_name}! Я милый бот-помощник для чего-то!\n"
+                     text=f"Привет, {user_name}! Я милый бот-помощник для чего-то!\n" 
                           f"Ты можешь у меня что то спросить а я на это отвечу.\n"
                           "/help-тут все команды, ну и мини тутор по использованию бота",
                      reply_markup=create_keyboard(["/new_story", '/help']))
