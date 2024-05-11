@@ -38,7 +38,7 @@ def start(message):
 @bot.message_handler(commands=['help'])
 def help(message):
     bot.send_message(message.from_user.id,
-                     text="Чтобы приступить к написанию сюжета: нажми /new_story, а затем выбери персонажей, жанр и сеттинг",
+                     text=f"/salto-самая важная команда\n/tts-после ввода команды напиши текст а в ответ тебе пришлют озвучку,\n/stt-пришли голосовое сообщение а в ответ получи текст\nЕсли ты просто напишешь сообщение то ты начнёшь общатся с YandexGPT",
                      reply_markup=create_keyboard(["/new_story"]))
 
 @bot.message_handler(commands=['tts'])
@@ -95,7 +95,6 @@ def stt(message):
 
 @bot.message_handler(content_types=['text', 'voice'])
 def get_message(message):
-    print('s')
     user_id = message.from_user.id
     sum_tokens=Data().select_from_table(['SUM(gpt_tokens)'], ['user_id'], [str(user_id)])
     if sum_tokens>=config.MAX_GPT_TOKENS_FOR_USER - system_tokens:
@@ -198,8 +197,4 @@ def continue_dialog(message, messages,remaining_tokens):
 
     bot.send_message(user_id, response)
     bot.register_next_step_handler(message, continue_dialog,messages,remaining_tokens)
-
-
-
-
 bot.polling()

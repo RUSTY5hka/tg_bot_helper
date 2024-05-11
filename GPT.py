@@ -73,7 +73,6 @@ class gpt:
                 "role": row["role"],  # Роль отправителя (пользователь или система)
                 "text": row['text']  # Текст сообщения
             })
-        print(data['messages'])
         return data
         # Отправка запроса
     def send_request(self, headers, data):
