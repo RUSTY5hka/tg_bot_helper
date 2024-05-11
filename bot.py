@@ -20,7 +20,7 @@ def create_keyboard(buttons_list):
 @bot.message_handler(commands=['salto'])
 def salto(message):
     number_gif=random.randint(1,len(config.salto)-1)
-    directory='C:/Users/Максим/PycharmProjects/pythonProject16/GIFs/backflip'+str(number_gif)+'.gif'
+    directory='GIFs/backflip'+str(number_gif)+'.gif'
     img = open(directory, 'rb')
     bot.send_video(message.chat.id, img, None, 'Text')
     img.close()
@@ -157,6 +157,10 @@ def get_message(message):
 
 def continue_dialog(message, messages,remaining_tokens):
     user_id = message.from_user.id
+    if not message.voice and not message.text:
+        return
+    if message.text=='Закончить':
+        return
     if remaining_tokens<=0:
         bot.send_message(user_id, 'кончились токены')
         return
@@ -195,6 +199,6 @@ def continue_dialog(message, messages,remaining_tokens):
     Data().insert_row(['user_id', 'role', 'gpt_tokens', 'content'], [str(user_id), 'user', str(user_tokens), text])
     Data().insert_row(['user_id', 'role', 'gpt_tokens', 'content'],[str(user_id), 'assistant', str(assistant_tokens), response])
 
-    bot.send_message(user_id, response)
+    bot.send_message(user_id, response, create_keyboard('Закончить'))
     bot.register_next_step_handler(message, continue_dialog,messages,remaining_tokens)
 bot.polling()
